@@ -27,15 +27,15 @@ def main():
     waiting = [] 
     ready_queue = deque([p1,p2,p3,p4,p5,p6,p7,p8])
     #test(ready_queue)
-    term = FCFS(ready_queue, waiting)
+    #term = FCFS(ready_queue, waiting)
     #term = SJF(ready_queue, waiting)
-    #term = MLFQ(ready_queue, waiting)
+    term = MLFQ(ready_queue, waiting)
     print_results(term)
-    # for process in term:
-    #     print("process: ", process.process_name)
-    #     print("waiting time: ", process.waiting_time)
-    #     print("turn around time: ", process.turn_around_time)
-    #     print("response time :", process.response_time)
+    for process in term:
+        print("process: ", process.process_name)
+        print("waiting time: ", process.waiting_time)
+        print("turn around time: ", process.turn_around_time)
+        print("response time :", process.response_time)
 
 
 
@@ -207,8 +207,8 @@ def SJF(ready_queue, waiting_queue):
                     
                     #idle_time += process.burst_times[process.i]
                     add_to_waiting(waiting_queue, process)
-                    #view_ready(ready_queue)  
-                    #view_waiting(waiting_queue)
+                    view_ready(ready_queue)  
+                    view_waiting(waiting_queue)
     print("total time:", time)
     cpu_util_percent = (cpu_util/time)*100
     print("cpu utilization %: ", cpu_util_percent)
@@ -217,6 +217,7 @@ def SJF(ready_queue, waiting_queue):
     return terminated
 
 def round_robin(ready_queue, waiting_queue, quantum_time, time=0, cpu_util=0):
+    terminated = []
     next_ready = deque()
     next_waiting = []
     while(len(ready_queue) != 0 or len(waiting_queue) != 0):
